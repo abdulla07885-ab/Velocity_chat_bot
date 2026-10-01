@@ -14,7 +14,7 @@ export const analyzeRequest = async (
   if (onProgress) onProgress('Sending request to routing engine...');
   
   try {
-    const response = await fetch('http://127.0.0.1:8001/v1/route', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/v1/route`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ export const analyzeRequest = async (
   } catch (error) {
     console.error("Error during routing:", error);
     return {
-      message: "An error occurred while connecting to the routing backend. Please ensure the backend is running on port 8001.",
+      message: "An error occurred while connecting to the routing backend. Please check your network connection and ensure the backend is running and accessible.",
       trace: {
         model: 'unknown',
         reason: 'Error connecting to backend',
