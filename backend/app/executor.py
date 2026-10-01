@@ -66,9 +66,13 @@ def execute_model(decision, messages):
             )
             return response.text
         except errors.ClientError as e:
+            print(f"EXECUTOR: gemini_error_type={type(e).__name__}")
+            print(f"EXECUTOR: gemini_error={str(e)}")
             print(f"EXECUTOR: unavailable={decision.model}")
             return f"Error: Failed to execute Gemini model due to an API error: {str(e)}"
         except Exception as e:
+            print(f"EXECUTOR: gemini_error_type={type(e).__name__}")
+            print(f"EXECUTOR: gemini_error={str(e)}")
             print(f"EXECUTOR: unavailable={decision.model}")
             return f"Error: Failed to execute Gemini model due to an unexpected error: {str(e)}"
     elif "qwen" in decision.model.lower() or "llama" in decision.model.lower():
