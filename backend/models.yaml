@@ -1,0 +1,18 @@
+models:
+  - name: qwen2.5:3b
+    provider: ollama
+    location: local
+    estimated_cost: 0
+    purpose: simple_tasks
+
+  - name: llama3.1:8b
+    provider: ollama
+    location: local
+    estimated_cost: 0
+    purpose: coding_reasoning
+
+  - name: gemini
+    provider: gemini
+    location: cloud
+    estimated_cost: 1
+    purpose: complex_reasoning

@@ -104,16 +104,20 @@ export const RoutingPlayground: React.FC = () => {
                       <span className="px-2 py-0.5 rounded border border-neutral-200 text-[10px] font-bold uppercase tracking-wider bg-neutral-100 text-neutral-600">LOCAL</span>
                     </div>
                     <RoutingTrace trace={{
-                      complexity: 'Complex',
+                      complexity: 'complex',
                       intent: 'Code / Reasoning',
-                      privacy: 'Normal',
-                      model: 'Llama 3.1 8B',
-                      cost: 0,
-                      latency: 890,
-                      quality: 94,
-                      fallbacks: 0,
-                      securityPassed: true,
-                      budgetWithinLimit: true
+                      privacy: 'normal',
+                      model: 'llama3.1:8b',
+                      budget_limit: 1.0,
+                      selected_model: 'llama3.1:8b',
+                      fallback_used: false,
+                      execution_status: 'success',
+                      reason: 'Complex coding request requires higher reasoning model',
+                      evaluation: {
+                        passed: true,
+                        score: 0.94,
+                        reason: 'Passed tests'
+                      }
                     }} />
                   </div>
                   

@@ -1,17 +1,20 @@
 export type Role = 'user' | 'assistant' | 'system';
 
 export interface RoutingTrace {
-  complexity: 'Simple' | 'Normal' | 'Complex';
-  intent: string;
-  privacy: 'Normal' | 'Strict';
   model: string;
-  cost: number;
-  latency: number;
-  quality: number;
-  fallbacks: number;
-  securityPassed: boolean;
-  budgetWithinLimit: boolean;
-  reason?: string;
+  reason: string;
+  intent: string;
+  complexity: string;
+  privacy: string;
+  budget_limit: number;
+  selected_model: string;
+  fallback_used: boolean;
+  execution_status: string;
+  evaluation?: {
+    passed: boolean;
+    score: number;
+    reason: string;
+  };
   candidates?: { name: string; cost: number; latency: number; quality: number }[];
 }
 

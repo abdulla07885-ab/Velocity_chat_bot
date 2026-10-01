@@ -16,7 +16,7 @@ export const mockChats: Chat[] = [
     messages: [
       { id: 'm1', role: 'user', content: 'Design a scalable website architecture for an e-commerce platform.', timestamp: new Date() },
       { id: 'm2', role: 'assistant', content: 'Here is a scalable architecture:\\n\\n1. **Frontend**: React/Next.js hosted on Vercel or AWS Amplify.\\n2. **Backend**: Microservices using Python/FastAPI or Go.\\n3. **Database**: PostgreSQL for relational data, Redis for caching, Elasticsearch for product search.\\n4. **Infrastructure**: Kubernetes (EKS/GKE) for orchestration, with Cloudflare for CDN and DDoS protection.', timestamp: new Date(),
-        routingTrace: { complexity: 'Complex', intent: 'Code / Reasoning', privacy: 'Normal', model: 'Llama 3.1 8B', cost: 0, latency: 890, quality: 94, fallbacks: 0, securityPassed: true, budgetWithinLimit: true }
+        routingTrace: { complexity: 'complex', intent: 'Code / Reasoning', privacy: 'normal', model: 'llama3.1:8b', budget_limit: 1.0, selected_model: 'llama3.1:8b', fallback_used: false, execution_status: 'success', reason: 'High reasoning required', evaluation: { passed: true, score: 0.95, reason: 'Good' } }
       }
     ]
   },
@@ -29,7 +29,7 @@ export const mockChats: Chat[] = [
     messages: [
       { id: 'm3', role: 'user', content: 'What is 17.5% of 2480?', timestamp: new Date() },
       { id: 'm4', role: 'assistant', content: '17.5% of 2480 is **434**.\\n\\nCalculation: `2480 * 0.175 = 434`', timestamp: new Date(),
-        routingTrace: { complexity: 'Simple', intent: 'Math', privacy: 'Normal', model: 'Qwen 2.5 3B', cost: 0, latency: 180, quality: 91, fallbacks: 0, securityPassed: true, budgetWithinLimit: true }
+        routingTrace: { complexity: 'simple', intent: 'Math', privacy: 'normal', model: 'qwen2.5:3b', budget_limit: 1.0, selected_model: 'qwen2.5:3b', fallback_used: false, execution_status: 'success', reason: 'Simple math query', evaluation: { passed: true, score: 0.98, reason: 'Good' } }
       }
     ]
   }

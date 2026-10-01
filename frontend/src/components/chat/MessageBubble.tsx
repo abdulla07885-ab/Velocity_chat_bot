@@ -25,10 +25,6 @@ export const MessageBubble: React.FC<{ message: Message }> = ({ message }) => {
         <div className="flex-1 space-y-4 overflow-hidden">
           {!isUser && message.routingTrace && message.routingTrace.reason && (
             <div className="mb-6 space-y-4">
-              <div className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-amber-50 border border-amber-200 text-[10px] font-bold text-amber-700 uppercase tracking-wider mb-2">
-                Demo Mode
-              </div>
-              
               <div className="bg-white border border-neutral-200 rounded-xl overflow-hidden shadow-sm">
                 <div className="bg-neutral-50 px-4 py-2 border-b border-neutral-200 flex items-center justify-between">
                   <span className="text-xs font-semibold text-neutral-600 uppercase tracking-wider">Routing Decision</span>
@@ -63,7 +59,6 @@ export const MessageBubble: React.FC<{ message: Message }> = ({ message }) => {
                           </div>
                         ))}
                       </div>
-                      <div className="text-[10px] text-neutral-400 mt-2 text-right italic">Illustrative demo data</div>
                     </div>
                   )}
                 </div>

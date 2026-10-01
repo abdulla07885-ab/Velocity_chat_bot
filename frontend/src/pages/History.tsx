@@ -20,8 +20,6 @@ export const History: React.FC = () => {
                 <th className="px-6 py-4 font-medium">Request</th>
                 <th className="px-6 py-4 font-medium">Model</th>
                 <th className="px-6 py-4 font-medium">Intent</th>
-                <th className="px-6 py-4 font-medium">Latency</th>
-                <th className="px-6 py-4 font-medium">Quality</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-neutral-100">
@@ -41,8 +39,6 @@ export const History: React.FC = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-neutral-500">{trace?.intent || 'General'}</td>
-                    <td className="px-6 py-4 text-neutral-600">{trace?.latency || 0}ms</td>
-                    <td className="px-6 py-4 text-green-600 font-medium">{trace?.quality || 0}%</td>
                   </tr>
                 );
               })}

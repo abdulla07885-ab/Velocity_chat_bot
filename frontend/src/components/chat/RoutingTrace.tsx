@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { RoutingTrace as TraceType } from '../../types';
-import { ChevronDown, ChevronUp, Check, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { ChevronDown, ChevronUp, Check, ShieldCheck } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 export const RoutingTrace: React.FC<{ trace: TraceType }> = ({ trace }) => {
@@ -21,27 +21,16 @@ export const RoutingTrace: React.FC<{ trace: TraceType }> = ({ trace }) => {
             {/* Steps */}
             <div className="p-3 grid grid-cols-2 gap-y-3 gap-x-4 text-xs">
               <div>
-                <span className="block text-neutral-400 mb-0.5 uppercase tracking-wider text-[10px] font-semibold">Security</span>
+                <span className="block text-neutral-400 mb-0.5 uppercase tracking-wider text-[10px] font-semibold">Privacy</span>
                 <div className="flex items-center gap-1.5 text-neutral-800">
-                  {trace.securityPassed ? <Check className="w-3.5 h-3.5 text-green-600" /> : <AlertTriangle className="w-3.5 h-3.5 text-red-600" />}
-                  <span>{trace.securityPassed ? 'Passed' : 'Failed'}</span>
-                </div>
-              </div>
-              
-              <div>
-                <span className="block text-neutral-400 mb-0.5 uppercase tracking-wider text-[10px] font-semibold">Budget</span>
-                <div className="flex items-center gap-1.5 text-neutral-800">
-                  {trace.budgetWithinLimit ? <Check className="w-3.5 h-3.5 text-green-600" /> : <AlertTriangle className="w-3.5 h-3.5 text-red-600" />}
-                  <span>{trace.budgetWithinLimit ? 'Within limit' : 'Exceeded'}</span>
+                  {trace.privacy === 'strict' ? <ShieldCheck className="w-3.5 h-3.5 text-amber-600" /> : <Check className="w-3.5 h-3.5 text-green-600" />}
+                  <span className={cn(trace.privacy === 'strict' && "text-amber-700 font-medium")}>{trace.privacy}</span>
                 </div>
               </div>
 
               <div>
-                <span className="block text-neutral-400 mb-0.5 uppercase tracking-wider text-[10px] font-semibold">Privacy</span>
-                <div className="flex items-center gap-1.5 text-neutral-800">
-                  {trace.privacy === 'Strict' ? <ShieldCheck className="w-3.5 h-3.5 text-amber-600" /> : <Check className="w-3.5 h-3.5 text-green-600" />}
-                  <span className={cn(trace.privacy === 'Strict' && "text-amber-700 font-medium")}>{trace.privacy}</span>
-                </div>
+                <span className="block text-neutral-400 mb-0.5 uppercase tracking-wider text-[10px] font-semibold">Budget Limit</span>
+                <span className="text-neutral-800">${trace.budget_limit}</span>
               </div>
 
               <div>
@@ -53,41 +42,48 @@ export const RoutingTrace: React.FC<{ trace: TraceType }> = ({ trace }) => {
                 <span className="block text-neutral-400 mb-0.5 uppercase tracking-wider text-[10px] font-semibold">Intent</span>
                 <span className="text-neutral-800">{trace.intent}</span>
               </div>
-
+              
+              <div className="col-span-2">
+                <span className="block text-neutral-400 mb-0.5 uppercase tracking-wider text-[10px] font-semibold">Routing Reason</span>
+                <span className="text-neutral-800">{trace.reason}</span>
+              </div>
+              
               <div>
-                <span className="block text-neutral-400 mb-0.5 uppercase tracking-wider text-[10px] font-semibold">Model</span>
-                <span className="text-red-700 font-medium">{trace.model}</span>
+                <span className="block text-neutral-400 mb-0.5 uppercase tracking-wider text-[10px] font-semibold">Execution Status</span>
+                <span className="text-neutral-800">{trace.execution_status}</span>
+              </div>
+              
+              <div>
+                <span className="block text-neutral-400 mb-0.5 uppercase tracking-wider text-[10px] font-semibold">Evaluation Score</span>
+                <span className="text-neutral-800">{trace.evaluation?.score ?? 'N/A'}</span>
               </div>
             </div>
-
-            {/* Metrics */}
-            <div className="p-3 bg-neutral-50 flex items-center justify-between text-xs">
-              <div>
-                <span className="text-neutral-500">Latency: </span>
-                <span className="text-neutral-900 font-medium">{trace.latency}ms</span>
-              </div>
-              <div>
-                <span className="text-neutral-500">Cost: </span>
-                <span className="text-neutral-900 font-medium">${trace.cost.toFixed(4)}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <span className="text-neutral-500">Quality: </span>
-                <span className="text-green-600 font-medium">{trace.quality}% PASS</span>
-              </div>
+            
+            <div className="p-3 bg-neutral-50 flex flex-col gap-2 text-xs">
+                <span className="block text-neutral-400 mb-0.5 uppercase tracking-wider text-[10px] font-semibold">Execution Flow</span>
+                {trace.fallback_used ? (
+                  <div className="flex flex-col gap-1 font-medium text-neutral-700">
+                    <div>{trace.selected_model.toUpperCase()}</div>
+                    <div className="flex items-center gap-2 text-neutral-400 text-[10px]">
+                      <span>↓</span> <span>execution unavailable</span>
+                    </div>
+                    <div>{trace.model.toUpperCase()}</div>
+                    <div className="flex items-center gap-2 text-neutral-400 text-[10px]">
+                      <span>↓</span>
+                    </div>
+                    <div className="text-green-600">Response generated</div>
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-1 font-medium text-neutral-700">
+                    <div>{trace.selected_model.toUpperCase()}</div>
+                    <div className="flex items-center gap-2 text-neutral-400 text-[10px]">
+                      <span>↓</span>
+                    </div>
+                    <div className="text-green-600">Response generated</div>
+                  </div>
+                )}
             </div>
           </div>
-          
-          {trace.fallbacks > 0 && (
-            <div className="bg-red-50 border-t border-red-100 p-3 text-xs">
-              <div className="flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-red-600 flex-shrink-0" />
-                <div>
-                  <span className="font-medium text-red-800 block">Fallback Triggered ({trace.fallbacks})</span>
-                  <span className="text-red-600/80">Primary model exceeded the configured latency threshold.</span>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       )}
     </div>
