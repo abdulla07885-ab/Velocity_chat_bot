@@ -67,6 +67,8 @@ def route_request(request: RouteRequest):
             decision.evaluation = eval_result
             decision.fallback_used = fallback_used
             decision.execution_status = "success"
+            decision.selected_model = current_model
+            print(f"EVALUATOR: score={eval_result.score}")
             return RouteResponse(content=response_content, routing_trace=decision)
             
         fallback_used = True
@@ -80,17 +82,26 @@ def route_request(request: RouteRequest):
         if next_model:
             current_model = next_model
         else:
+            eval_result.score = 0.1
+            eval_result.passed = False
             decision.evaluation = eval_result
             decision.fallback_used = fallback_used
-            decision.execution_status = "failed"
+            decision.execution_status = "fallback"
+            decision.selected_model = "graceful-fallback"
+            print("FALLBACK: using=graceful-fallback")
             return RouteResponse(
-                content="Error: No executable fallback is currently available.",
+                content="[Graceful Fallback] All AI providers are currently unavailable. Please try again later.",
                 routing_trace=decision
             )
 
+    eval_result.score = 0.1
+    eval_result.passed = False
+    decision.evaluation = eval_result
     decision.fallback_used = fallback_used
-    decision.execution_status = "failed"
+    decision.execution_status = "fallback"
+    decision.selected_model = "graceful-fallback"
+    print("FALLBACK: using=graceful-fallback")
     return RouteResponse(
-        content="Error: No executable fallback is currently available.",
+        content="[Graceful Fallback] All AI providers are currently unavailable. Please try again later.",
         routing_trace=decision
     )
